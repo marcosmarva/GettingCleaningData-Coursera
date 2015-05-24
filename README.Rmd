@@ -32,14 +32,12 @@ about the activity names and the variable names are contained in
   * activity_labels.txt
   * feataues.txt
 
-If you want to reproduce We assume that the R workspace is clean by using `rm(list=ls())`, you have download 
-and unzip data < http:// > and that you have set properly the working directory `setwd(./UCI HAR Dataset)`
+If you want to run the script, we assume that the R workspace is clean by using `rm(list=ls())`, you have download 
+and unzip data from < https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip > 
+and that you have set properly the working directory `setwd(./UCI HAR Dataset)`
 
 
 #### 1.- Merges the training and the test sets to create one data set.
-
-As a summary, 
-
 Read and gather test data
 
      subjectTest <- read.table(file = "UCI HAR Dataset/test/subject_test.txt")

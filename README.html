@@ -84,10 +84,9 @@ img {
 <li>activity_labels.txt</li>
 <li>feataues.txt</li>
 </ul>
-<p>If you want to reproduce We assume that the R workspace is clean by using <code>rm(list=ls())</code>, you have download and unzip data &lt; <a href="http://" class="uri">http://</a> &gt; and that you have set properly the working directory <code>setwd(./UCI HAR Dataset)</code></p>
+<p>If you want to run the script, we assume that the R workspace is clean by using <code>rm(list=ls())</code>, you have download and unzip data from &lt; <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip</a> &gt; and that you have set properly the working directory <code>setwd(./UCI HAR Dataset)</code></p>
 <div id="merges-the-training-and-the-test-sets-to-create-one-data-set." class="section level4">
 <h4>1.- Merges the training and the test sets to create one data set.</h4>
-<p>As a summary,</p>
 <p>Read and gather test data</p>
 <pre><code> subjectTest &lt;- read.table(file = &quot;UCI HAR Dataset/test/subject_test.txt&quot;)
  activityTest &lt;- read.table(file = &quot;UCI HAR Dataset/test/y_test.txt&quot;)

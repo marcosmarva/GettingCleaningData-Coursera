@@ -5,6 +5,10 @@ date: "05/22/2015"
 output: pdf_document
 ---
 
+### Important
+The markdown version of this code book contains R code; executing this code produces the full code book (with a detailed 
+description of each variable). You can find the full version of the Code book in the file CodeBook.pdf. You can also download the data files from <https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip> and run the code below. 
+
 
 ## Overview on the experiment, variables and data
 In this section we reproduce <http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones> in order to briefly describe the experiments that yielded the data. 
