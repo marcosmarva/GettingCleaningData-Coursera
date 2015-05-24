@@ -84,7 +84,7 @@ img {
 <li>activity_labels.txt</li>
 <li>feataues.txt</li>
 </ul>
-<p>If you want to run the script, we assume that the R workspace is clean by using <code>rm(list=ls())</code>, you have download and unzip data from &lt; <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip</a> &gt; and that you have set properly the working directory <code>setwd(./UCI HAR Dataset)</code></p>
+<p>If you want to run the script, just copy andpast in your R-console the code below. We assume that the R workspace is clean by using <code>rm(list=ls())</code>, you have download and unzip data from <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip</a> and that you have set properly the working directory <code>setwd(./UCI HAR Dataset)</code></p>
 <div id="merges-the-training-and-the-test-sets-to-create-one-data-set." class="section level4">
 <h4>1.- Merges the training and the test sets to create one data set.</h4>
 <p>Read and gather test data</p>
@@ -107,26 +107,31 @@ img {
 <p>select the the measurements on the mean and standard deviation for each measurement.</p>
 <pre><code> myFeatures &lt;- which(grepl(&quot;mean|std&quot;, x = as.character(AllFeatures$V2)))</code></pre>
 </div>
+<div id="get-the-dataframe-with-the-desired-columns" class="section level1">
+<h1>get the dataframe with the desired columns</h1>
+<pre><code> myDataFrame &lt;- df[, c(1, 2, myFeatures)]</code></pre>
 <div id="uses-descriptive-activity-names-to-name-the-activities-in-the-data-set" class="section level4">
 <h4>3.- Uses descriptive activity names to name the activities in the data set</h4>
 <p>get the activity labels</p>
 <pre><code> allActivities &lt;- read.table(file = &quot;UCI HAR Dataset/activity_labels.txt&quot;)
  activityName = as.character(allActivities$V2)</code></pre>
 <p>in the raw data the activity is coded with a number and this column is numeric. First convert this column in a factor</p>
-<pre><code> myData[ ,2] &lt;- factor(myData[ ,2])</code></pre>
+<pre><code> myDataFrame[ ,2] &lt;- factor(myDataFrame[ ,2])</code></pre>
 <p>and then relabel the levels of the factor</p>
-<pre><code> levels(myData[ ,2])&lt;-activityName</code></pre>
+<pre><code> levels(myDataFrame[ ,2])&lt;-activityName</code></pre>
 </div>
 <div id="appropriately-labels-the-data-set-with-descriptive-variable-names." class="section level4">
 <h4>4.- Appropriately labels the data set with descriptive variable names.</h4>
 <p>chose the right labelsfor the selected features</p>
 <pre><code> measuramentNames &lt;- as.character(AllFeatures[myFeatures, 2])</code></pre>
 <p>set the column names</p>
-<pre><code> names(myData) &lt;- c(&quot;Subject&quot;, &quot;Activity&quot;, measuramentNames)</code></pre>
+<pre><code> myNames&lt;- c(&quot;Subject&quot;, &quot;Activity&quot;, measuramentNames)
+ colnames(myDataFrame) &lt;- myNames</code></pre>
 </div>
 <div id="from-the-data-set-in-step-4-creates-a-second-independent-tidy-data-set-with-the-average-of-each-variable-for-each-activity-and-each-subject" class="section level4">
 <h4>5.- From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject</h4>
-<pre><code> write.table(myData, file = &quot;./tidyData.txt&quot;, row.names = FALSE)</code></pre>
+<pre><code> write.table(myDataFrame, file = &quot;./tidyData.txt&quot;, row.names = FALSE)</code></pre>
+</div>
 </div>
 
 

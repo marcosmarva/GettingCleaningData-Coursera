@@ -32,9 +32,7 @@ about the activity names and the variable names are contained in
   * activity_labels.txt
   * feataues.txt
 
-If you want to run the script, we assume that the R workspace is clean by using `rm(list=ls())`, you have download 
-and unzip data from < https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip > 
-and that you have set properly the working directory `setwd(./UCI HAR Dataset)`
+If you want to run the script, just copy andpast in your R-console the code below.  We assume that the R workspace is clean by using `rm(list=ls())`, you have download and unzip data from <https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip> and that you have set properly the working directory `setwd(./UCI HAR Dataset)`
 
 
 #### 1.- Merges the training and the test sets to create one data set.
@@ -66,6 +64,9 @@ get a table displaying the all the features
 select the the measurements on the mean and standard deviation for each measurement. 
 
      myFeatures <- which(grepl("mean|std", x = as.character(AllFeatures$V2)))
+# get the dataframe with the desired columns
+
+     myDataFrame <- df[, c(1, 2, myFeatures)]
 
 
 #### 3.- Uses descriptive activity names to name the activities in the data set
@@ -78,11 +79,11 @@ get the activity labels
 in the raw data the activity is coded with a number and this column is numeric. 
 First convert this column in a factor
      
-     myData[ ,2] <- factor(myData[ ,2])
+     myDataFrame[ ,2] <- factor(myDataFrame[ ,2])
 
 and then relabel the levels of the factor
 
-     levels(myData[ ,2])<-activityName
+     levels(myDataFrame[ ,2])<-activityName
 
 
 #### 4.- Appropriately labels the data set with descriptive variable names. 
@@ -93,12 +94,12 @@ chose the right labelsfor the selected features
 
 set the column names
 
-     names(myData) <- c("Subject", "Activity", measuramentNames)
+     myNames<- c("Subject", "Activity", measuramentNames)
+     colnames(myDataFrame) <- myNames
 
 
 #### 5.- From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
      
-     write.table(myData, file = "./tidyData.txt", row.names = FALSE)
-
+     write.table(myDataFrame, file = "./tidyData.txt", row.names = FALSE)
 
 
