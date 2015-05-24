@@ -1,0 +1,121 @@
+---
+title: "README"
+author: "Marcos Marvá"
+date: "05/22/2015"
+output: html_document
+---
+
+
+This document constains a description of the `R`  script "run_analysis.R" that has been written as part of the project of the course Getting and Cleaning Data (Coursera, Bloomberg School of Public Health, Johns Homkins university). As required, this repo explains how all of the scripts work and how they are connected.  
+
+
+
+A detailed description of the files and variables involved in this project can  be found in the code book (CodeBook.rm, CodeBook.pdf) in this repo. Next, in order to make the script understandable, we briefly describe the 
+the relevant information on the data/files used and the purpose of the script.  30 people are asked to perform 
+6 activities wearing a smartphone on the waist. The smartphone measures different data (actually, 561 
+variables). Each individual performs each activity more than once. The obtained dataset has been partitioned into two sets, labeled as "training" and "test" data. 
+
+
+The script is written to tidy up the above mentioned data , that is 
+contained in the files 
+
+  * subject_test.txt
+  * X_test.txt
+  * y_test.txt
+  * subject_train.txt
+  * X_train.txt
+  * y_train.txt
+
+These is the raw data (since they are the departure point for the script). Also, the information 
+about the activity names and the variable names are contained in 
+
+  * activity_labels.txt
+  * feataues.txt
+
+If you want to reproduce We assume that the R workspace is clean by using `rm(list=ls())`, you have download 
+and unzip data < http:// > and that you have set properly the working directory `setwd(./UCI HAR Dataset)`
+
+
+#### 1.- Merges the training and the test sets to create one data set.
+
+As a summary, 
+
+Read and gather test data
+
+     subjectTest <- read.table(file = "UCI HAR Dataset/test/subject_test.txt")
+     activityTest <- read.table(file = "UCI HAR Dataset/test/y_test.txt")
+     dataTest <- read.table(file = "UCI HAR Dataset/test/X_test.txt")
+     dfTest = data.frame(subjectTest, activityTest, dataTest)
+
+Read and gather training data
+
+     subjectTrain <- read.table(file = "UCI HAR Dataset/train/subject_train.txt")
+     activityTrain <- read.table(file = "UCI HAR Dataset/train/y_train.txt")
+     dataTrain <- read.table(file = "UCI HAR Dataset/train/X_train.txt")
+     dfTrain = data.frame(subjectTrain, activityTrain, dataTrain)
+
+gather test and training data into a single `data.frame` called ´df´
+
+     df <- rbind(dfTest, dfTrain)
+
+
+#### 2.- Extracts only the measurements on the mean and standard deviation for each measurement. 
+
+get a table displaying the all the features
+
+     AllFeatures <- read.table(file = "UCI HAR Dataset/features.txt")
+
+select the the measurements on the mean and standard deviation for each measurement. 
+
+     myFeatures <- which(grepl("mean|std", x = as.character(AllFeatures$V2)))
+
+
+#### 3.- Uses descriptive activity names to name the activities in the data set
+
+get the activity labels 
+
+     allActivities <- read.table(file = "UCI HAR Dataset/activity_labels.txt")
+     activityName = as.character(allActivities$V2)
+
+in the raw data the activity is coded with a number and this column is numeric. 
+First convert this column in a factor
+     
+     myData[ ,2] <- factor(myData[ ,2])
+
+and then relabel the levels of the factor
+
+     levels(myData[ ,2])<-activityName
+
+
+#### 4.- Appropriately labels the data set with descriptive variable names. 
+
+chose the right labelsfor the selected features
+
+     measuramentNames <- as.character(AllFeatures[myFeatures, 2])
+
+set the column names
+
+     names(myData) <- c("Subject", "Activity", measuramentNames)
+
+
+#### 5.- From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject
+     
+     write.table(myData, file = "./tidyData.txt", row.names = FALSE)
+
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
